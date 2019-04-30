@@ -9,22 +9,22 @@ using PhoneStore.Models;
 
 namespace PhoneStore.Controllers
 {
-    public class PhonesController : Controller
+    public class MemoriesController : Controller
     {
         private readonly PhoneStoreContext _context;
 
-        public PhonesController(PhoneStoreContext context)
+        public MemoriesController(PhoneStoreContext context)
         {
             _context = context;
         }
 
-        // GET: Phones
+        // GET: Memories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Phone.ToListAsync());
+            return View(await _context.Memory.ToListAsync());
         }
 
-        // GET: Phones/Details/5
+        // GET: Memories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,40 +32,39 @@ namespace PhoneStore.Controllers
                 return NotFound();
             }
 
-            var phone = await _context.Phone
+            var memory = await _context.Memory
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (phone == null)
+            if (memory == null)
             {
                 return NotFound();
             }
 
-            return View(phone);
+            return View(memory);
         }
 
-        // GET: Phones/Create
+        // GET: Memories/Create
         public IActionResult Create()
         {
-            ViewData["Memory"] = new SelectList( _context.Memory.ToList(),"Id","Name" ); 
             return View();
         }
 
-        // POST: Phones/Create
+        // POST: Memories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Quntity,Version")] Phone phone)
+        public async Task<IActionResult> Create([Bind("Id,Name,Size")] Memory memory)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(phone);
+                _context.Add(memory);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(phone);
+            return View(memory);
         }
 
-        // GET: Phones/Edit/5
+        // GET: Memories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +72,22 @@ namespace PhoneStore.Controllers
                 return NotFound();
             }
 
-            var phone = await _context.Phone.SingleOrDefaultAsync(m => m.Id == id);
-            if (phone == null)
+            var memory = await _context.Memory.SingleOrDefaultAsync(m => m.Id == id);
+            if (memory == null)
             {
                 return NotFound();
             }
-            return View(phone);
+            return View(memory);
         }
 
-        // POST: Phones/Edit/5
+        // POST: Memories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Quntity,Version")] Phone phone)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Size")] Memory memory)
         {
-            if (id != phone.Id)
+            if (id != memory.Id)
             {
                 return NotFound();
             }
@@ -97,12 +96,12 @@ namespace PhoneStore.Controllers
             {
                 try
                 {
-                    _context.Update(phone);
+                    _context.Update(memory);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PhoneExists(phone.Id))
+                    if (!MemoryExists(memory.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +112,10 @@ namespace PhoneStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(phone);
+            return View(memory);
         }
 
-        // GET: Phones/Delete/5
+        // GET: Memories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +123,30 @@ namespace PhoneStore.Controllers
                 return NotFound();
             }
 
-            var phone = await _context.Phone
+            var memory = await _context.Memory
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (phone == null)
+            if (memory == null)
             {
                 return NotFound();
             }
 
-            return View(phone);
+            return View(memory);
         }
 
-        // POST: Phones/Delete/5
+        // POST: Memories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var phone = await _context.Phone.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Phone.Remove(phone);
+            var memory = await _context.Memory.SingleOrDefaultAsync(m => m.Id == id);
+            _context.Memory.Remove(memory);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PhoneExists(int id)
+        private bool MemoryExists(int id)
         {
-            return _context.Phone.Any(e => e.Id == id);
+            return _context.Memory.Any(e => e.Id == id);
         }
     }
 }

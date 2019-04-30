@@ -11,9 +11,10 @@ using System;
 namespace PhoneStore.Migrations
 {
     [DbContext(typeof(PhoneStoreContext))]
-    partial class PhoneStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190430170859_memory")]
+    partial class memory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

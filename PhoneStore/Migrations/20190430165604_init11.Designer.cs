@@ -11,35 +11,20 @@ using System;
 namespace PhoneStore.Migrations
 {
     [DbContext(typeof(PhoneStoreContext))]
-    partial class PhoneStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20190430165604_init11")]
+    partial class init11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PhoneStore.Models.Memory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("Size");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Memory");
-                });
-
             modelBuilder.Entity("PhoneStore.Models.Phone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("MemoryId");
 
                     b.Property<string>("Name");
 
@@ -51,16 +36,7 @@ namespace PhoneStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemoryId");
-
                     b.ToTable("Phone");
-                });
-
-            modelBuilder.Entity("PhoneStore.Models.Phone", b =>
-                {
-                    b.HasOne("PhoneStore.Models.Memory", "Memory")
-                        .WithMany("Phones")
-                        .HasForeignKey("MemoryId");
                 });
 #pragma warning restore 612, 618
         }
