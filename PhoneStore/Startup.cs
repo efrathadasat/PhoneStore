@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using PhoneStore.Models;
 
 namespace PhoneStore
 {
@@ -22,6 +24,9 @@ namespace PhoneStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<PhoneStoreContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("PhoneStoreContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
